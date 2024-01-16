@@ -22,7 +22,7 @@ function App() {
             stroke="#fff"
           />
         </svg>
-        <h1>1234 5678 9123 4567</h1>
+        <h1>9591 6489 6389 1011</h1>
         <p id='name'>FELICIA LEIRE</p>
         <p id='date'>09/00</p>
       </div>
