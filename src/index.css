@@ -147,3 +147,39 @@ button{
   background-color: var(--neutral-4);
   color: var(--neutral-1);
 }
+/*adding media qua*/
+@media screen and (max-width: 850px) {
+  #root {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(7, .25fr) repeat(3, 1fr);
+  }
+
+  .front-card { 
+    grid-area: 4 / 2 / 8 / 6;
+    max-width: 280px;
+    width: 100%;
+    height: 230px;
+  }
+  .back-card { 
+    grid-area: 2 / 3 / 6 / 6;
+    max-width: 280px;
+    width: 100%;
+     height:230px;
+    border-radius: 10px;
+  }
+  .back-card p {
+  top: 100px;
+}
+  .form {
+    grid-area: 7 / 2 / 10 / 6;
+    max-width: 540px;
+    width: 100%;
+  }
+  .side-bar {
+    grid-area: 1 / 1 / 7 / 7;
+    min-height: 240px;
+  background-image: url('./Assets/bg-main-mobile.png');
+  
+  }
+}
