@@ -1,58 +1,41 @@
-import React, { useState } from "react";
+import { useState } from 'react'
+
 
 function App() {
-  // State to manage form data
-  const [formData, setFormData] = useState({
-    cardholderName: "",
-    cardNumber: "",
-    expiryMonth: "",
-    expiryYear: "",
-    cvc: "",
-  });
+  const [cardHolder,setCardHolder] = useState("")
+  const [cardNumb, setCardNumb] = useState("");
+  const [expDay, setExpDay] = useState("");
+  const [expMonth, setExpMonth] = useState("");
+  const [cvc, setCvc] = useState("");
 
-  // State to manage form submission
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
-  // State to manage error messages for each input field
-  const [formErrors, setFormErrors] = useState({});
-
-  // Input change handler
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    // Update form data state
-    setFormData({ ...formData, [name]: value });
-    // Reset the error message when the user starts typing
-    setFormErrors({ ...formErrors, [name]: "" });
+  const handleCardHolderChange =(e) =>{
+    setCardHolder(e.target.value);
+    
+  }
+  const handleCardNumbChange = (e) => {
+    
+    setCardNumb(e.target.value);
+    
   };
-
-  // Form submission handler
-  const handleSubmit = () => {
-    // Validation logic
-    const errors = {};
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
-        errors[key] = "Can't be blank";
-      }
-    });
-
-    if (Object.keys(errors).length === 0) {
-      // If no errors, proceed to the completion form
-      setFormSubmitted(true);
-    } else {
-      // If there are errors, update the state to display error messages
-      setFormErrors(errors);
-    }
+  const handleExpDayChange = (e) => {
+   
+    setExpDay(e.target.value);
+   
   };
-
-  
-  
-
-  // Render the main form
+  const handleExpMonthChange = (e) => {
+    
+    setExpMonth(e.target.value);
+    
+  };
+  const handleCvcChange = (e) => {
+    
+    setCvc(e.target.value);
+  };
   return (
     <>
       <aside className="side-bar"></aside>
       <div className="back-card">
-        <p>012</p>
+        <p>{cvc}</p>
       </div>
       <div className="front-card">
         <svg
@@ -60,100 +43,77 @@ function App() {
           height="47"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-        ></svg>
-        <h1>{formData.cardNumber}</h1>
-        <p id="name">FELICIA LEIRE</p>
-        <p id="date">09/00</p>
+        >
+          <ellipse cx="23.478" cy="23.5" rx="23.478" ry="23.5" fill="#fff" />
+          <path
+            d="M83.5 23.5c0 5.565-4.507 10.075-10.065 10.075-5.559 0-10.065-4.51-10.065-10.075 0-5.565 4.506-10.075 10.065-10.075 5.558 0 10.065 4.51 10.065 10.075Z"
+            stroke="#fff"
+          />
+        </svg>
+        <h1>{cardNumb}</h1>
+        <p id="name">{cardHolder}</p>
+        <p id="date">
+          {expDay}/{expMonth}
+        </p>
       </div>
       <div className="form">
-        {/* Input for cardholder name */}
         <p>CARDHOLDER NAME</p>
         <input
           type="text"
-          name="cardholderName"
-          value={formData.cardholderName}
-          onChange={handleChange}
-          placeholder="e.g. Jane Appleseed"
-          style={{ borderColor: formErrors.cardholderName ? "red" : "" }}
+          value={cardHolder}
+          onChange={handleCardHolderChange}
+          name=""
+          id=""
+          placeholder="e.g.Jane Appleseed"
         />
-        {formErrors.cardholderName && (
-          <p style={{ color: "red" }} className="alart">
-            {formErrors.cardholderName}
-          </p>
-        )}
-
-        {/* Input for card number */}
         <p>CARD NUMBER</p>
         <input
-          name="cardNumber"
-          value={formData.cardNumber}
-          maxLength={16}
-          onChange={handleChange}
+          type="number"
+          value={cardNumb}
+          id="CardHolder"
           placeholder="e.g. 1234 5678 9123 0000"
-          style={{ borderColor: formErrors.cardNumber ? "red" : "" }}
+          maxLength={16}
+          onChange={handleCardNumbChange}
         />
-        {formErrors.cardNumber && (
-          <p style={{ color: "red" }} className="alart">
-            {formErrors.cardNumber}
-          </p>
-        )}
-
-        {/* ... Repeat similar code for other input fields ... */}
-
-        {/* Input for expiration date and CVC */}
         <div className="exp_cvc_holder">
           <div className="exp">
             <p>EXP.DATE(MM/YY)</p>
             <input
               type="number"
-              name="expiryMonth"
-              value={formData.expiryMonth}
-              onChange={handleChange}
+              name=""
+              id=""
               maxLength={2}
               placeholder="MM"
-              style={{ borderColor: formErrors.expiryMonth ? "red" : "" }}
+              onChange={handleExpDayChange}
+              value={expDay}
             />
-
             <input
               type="number"
-              name="expiryYear"
-              value={formData.expiryYear}
-              onChange={handleChange}
+              name=""
+              id=""
               maxLength={2}
               placeholder="YY"
-              style={{ borderColor: formErrors.expiryYear ? "red" : "" }}
+              onChange={handleExpMonthChange}
+              value={expMonth}
             />
           </div>
           <div className="cvc">
             <p>CVC</p>
             <input
               type="number"
-              name="cvc"
-              value={formData.cvc}
-              onChange={handleChange}
+              name=""
+              id=""
               maxLength={3}
               placeholder="e.g. 123"
-              style={{ borderColor: formErrors.cvc ? "red" : "" }}
+              onChange={handleCvcChange}
+              value={cvc}
             />
-            {formErrors.cardNumber && (
-              <p style={{ color: "red" }} className="alart">
-                {formErrors.cardNumber}
-              </p>
-            )}
           </div>
         </div>
-        <div>
-          {formErrors.cardNumber && (
-            <p style={{ color: "red" }} className="alart">
-              {formErrors.cardNumber}
-            </p>
-          )}
-        </div>
-        {/* Confirm button */}
-        <button onClick={handleSubmit}>Confirm</button>
+        <button>Confirm</button>
       </div>
     </>
   );
 }
 
-export default App;
+export default App
