@@ -47,15 +47,15 @@ function App() {
         break;
       case "expMonth":
         updatedValidationErrors.expMonth =
-          value.trim() === "" ? "Can't be blank" : "";
+          value.trim() === "" || !/^\d+$/.test(value) ? "Must be a number" : "";
         break;
       case "expYear":
         updatedValidationErrors.expYear =
-          value.trim() === "" ? "Can't be blank" : "";
+          value.trim() === "" || !/^\d+$/.test(value) ? "Must be a number" : "";
         break;
       case "cvc":
         updatedValidationErrors.cvc =
-          value.trim() === "" ? "can't be blank" : "";
+          value.trim() === "" || !/^\d+$/.test(value) ? "Must be a number" : "";
         break;
       default:
         break;

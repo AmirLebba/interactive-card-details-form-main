@@ -188,8 +188,18 @@ button {
   margin-top: 50px;
 }
 .confirmation img {
-  width: 110px;
+  width: 100px;
   margin-bottom: 30px;
+}
+.confirmation h1{
+  font-size: 1.7rem;
+  letter-spacing: 3px;
+  font-weight: 500;
+  
+}
+.confirmation p{
+  color: var(--neutral-3);
+  letter-spacing: 2px;
 }
 /*adding media qua*/
 @media screen and (max-width: 850px) {
