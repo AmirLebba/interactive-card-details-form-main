@@ -2,6 +2,13 @@ import { useState, useEffect } from "react";
 import tick from "./Assets/icon-complete.svg";
 
 function App() {
+  const [initialData, setInitialData] = useState({
+    cardHolder: "jane appleseed",
+    cardNumb: "0000 0000 0000 0000",
+    expMonth: "00",
+    expYear: "00",
+    cvc: "000",
+  });
   const [formData, setFormData] = useState({
     cardHolder: "",
     cardNumb: "",
@@ -18,14 +25,53 @@ function App() {
       ...prevFormData,
       [name]: value,
     }));
+
+    // Update border color based on validation errors
+    const updatedValidationErrors = { ...validationErrors };
+
+    switch (name) {
+      case "cardHolder":
+        updatedValidationErrors.cardHolder =
+          value.trim() === "" || !/^[a-zA-Z]+(?: [a-zA-Z]+)?$/.test(value)
+            ? "Name is not valid"
+            : "";
+        break;
+      case "cardNumb":
+        const cardNumbWithoutSpaces = value.replace(/\s/g, "");
+        updatedValidationErrors.cardNumb =
+          cardNumbWithoutSpaces.trim() === "" ||
+          !/^\d+$/.test(cardNumbWithoutSpaces) ||
+          cardNumbWithoutSpaces.length !== 16
+            ? "Wrong format, numbers only"
+            : "";
+        break;
+      case "expMonth":
+        updatedValidationErrors.expMonth =
+          value.trim() === "" ? "Can't be blank" : "";
+        break;
+      case "expYear":
+        updatedValidationErrors.expYear =
+          value.trim() === "" ? "Can't be blank" : "";
+        break;
+      case "cvc":
+        updatedValidationErrors.cvc =
+          value.trim() === "" ? "can't be blank" : "";
+        break;
+      default:
+        break;
+    }
+
+    setValidationErrors(updatedValidationErrors);
   };
-  const handleFormSubmit = () => {
+  
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
     const validationErrors = {};
 
     if (!formData.cardHolder.trim()) {
-      validationErrors.cardHolder = "Name can't be blank";
+      validationErrors.cardHolder = "can't be blank";
     } else if (!/^[a-zA-Z ]+$/.test(formData.cardHolder)) {
-      validationErrors.cardHolder = "Name is not valid";
+      validationErrors.cardHolder = "Wrong format, letters only";
     }
 
     const cardNumbWithoutSpaces = formData.cardNumb.replace(/\s/g, "");
@@ -35,29 +81,34 @@ function App() {
       !/^\d+$/.test(cardNumbWithoutSpaces) ||
       cardNumbWithoutSpaces.length !== 16
     ) {
-      validationErrors.cardNumb = "Card number is not valid";
+      validationErrors.cardNumb = "Wrong format, numbers only";
     }
 
     if (!formData.expMonth.trim()) {
-      validationErrors.expMonth = <span>can't be blank</span>;
+      validationErrors.expMonth = "can't be blank";
     }
 
     if (!formData.expYear.trim()) {
-      validationErrors.expYear = <span>can't be blank</span>;
+      validationErrors.expYear = "can't be blank";
     }
 
     if (!formData.cvc.trim()) {
-      validationErrors.cvc = "CVC can't be blank";
+      validationErrors.cvc = "can't be blank";
     }
 
-    return validationErrors;
+    setValidationErrors(validationErrors);
+
+    const isValid = Object.keys(validationErrors).length === 0;
+    setFormValid(isValid);
+
+    
   };
 
   return (
     <>
       <aside className="side-bar"></aside>
       <div className="back-card">
-        <p>{formData.cvc}</p>
+        <p>{formData.cvc || initialData.cvc}</p>
       </div>
       <div className="front-card">
         <svg
@@ -72,10 +123,11 @@ function App() {
             stroke="#fff"
           />
         </svg>
-        <h1>{formData.cardNumb}</h1>
-        <p id="name">{formData.cardHolder}</p>
+        <h1>{formData.cardNumb || initialData.cardNumb}</h1>
+        <p id="name">{formData.cardHolder || initialData.cardHolder}</p>
         <p id="date">
-          {formData.expMonth}/{formData.expYear}
+          {formData.expMonth || initialData.expMonth}/
+          {formData.expYear || initialData.expYear}
         </p>
       </div>
       {!formValid && (
@@ -88,7 +140,14 @@ function App() {
             name="cardHolder"
             id="cardHolder"
             placeholder="e.g.Jane Appleseed"
-            required
+            style={{
+              borderColor:
+                validationErrors.cardHolder === ""
+                  ? "hsl(249, 99%, 64%)" // Set to blue if there's no error
+                  : validationErrors.cardHolder
+                  ? "hsl(0, 100%, 66%)" // Set to red if there's an error
+                  : "",
+            }}
           />
           {validationErrors.cardHolder && (
             <span>{validationErrors.cardHolder}</span>
@@ -105,7 +164,14 @@ function App() {
             placeholder="e.g. 1234 5678 9123 0000"
             maxLength={19}
             onChange={handleChange}
-            required
+            style={{
+              borderColor:
+                validationErrors.cardNumb === ""
+                  ? "hsl(249, 99%, 64%)" // Set to blue if there's no error
+                  : validationErrors.cardNumb
+                  ? "hsl(0, 100%, 66%)" // Set to red if there's an error
+                  : "",
+            }}
           />
           {validationErrors.cardNumb && (
             <span>{validationErrors.cardNumb}</span>
@@ -122,7 +188,14 @@ function App() {
                 placeholder="MM"
                 onChange={handleChange}
                 value={formData.expMonth}
-                required
+                style={{
+                  borderColor:
+                    validationErrors.expMonth === ""
+                      ? "hsl(249, 99%, 64%)" // Set to blue if there's no error
+                      : validationErrors.expMonth
+                      ? "hsl(0, 100%, 66%)" // Set to red if there's an error
+                      : "",
+                }}
               />
 
               <input
@@ -133,12 +206,15 @@ function App() {
                 placeholder="YY"
                 onChange={handleChange}
                 value={formData.expYear}
-                required
+                style={{
+                  borderColor:
+                    validationErrors.expYear === ""
+                      ? "hsl(249, 99%, 64%)" // Set to blue if there's no error
+                      : validationErrors.expYear
+                      ? "hsl(0, 100%, 66%)" // Set to red if there's an error
+                      : "",
+                }}
               />
-              {validationErrors.expMonth ||
-                (validationErrors.expYear && (
-                  <span>{validationErrors.expYear}</span>
-                ))}
             </div>
             <div className="cvc">
               <label htmlFor="CVC">CVC</label>
@@ -150,15 +226,32 @@ function App() {
                 placeholder="e.g. 123"
                 onChange={handleChange}
                 value={formData.cvc}
-                required
+                style={{
+                  borderColor:
+                    validationErrors.cvc === ""
+                      ? "hsl(249, 99%, 64%)" // Set to blue if there's no error
+                      : validationErrors.cvc
+                      ? "hsl(0, 100%, 66%)" // Set to red if there's an error
+                      : "",
+                }}
               />
-              {validationErrors.cvc && <span>{validationErrors.cvc}</span>}
             </div>
+          </div>
+          <div className="errorDisplayer">
+            <span className="expError">
+              {validationErrors.expMonth ||
+                validationErrors.expYear && 
+                  <span>{validationErrors.expYear}</span>
+                }
+            </span>
+            <span className="cvcError">
+              {validationErrors.cvc && <span>{validationErrors.cvc}</span>}
+            </span>
           </div>
           <button type="submit">Confirm</button>
         </form>
       )}
-      {formValid && <ThankYou setConfirm={setFormValid} />}
+      {formValid && <ThankYou setFormValid={setFormValid} />}
     </>
   );
 }
@@ -168,13 +261,18 @@ export default App;
 /*confirmation complite app*/
 
 function ThankYou({ setFormValid }) {
+  const handleContinue = () => {
+    setFormValid(false);
+    window.location.reload(); // Reload the page
+  };
+
   return (
     <>
       <div className="confirmation">
         <img src={tick} alt="" />
-        <h1>Thank you!</h1>
+        <h1>THANK YOU !</h1>
         <p>We've added your card details</p>
-        <button onClick={() => setFormValid(false)}>Continue</button>
+        <button onClick={handleContinue}>Continue</button>
       </div>
     </>
   );

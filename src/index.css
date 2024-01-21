@@ -1,57 +1,62 @@
 :root {
-  --primary-1:hsl(249, 99%, 64%) to hsl(278, 94%, 30%);
-  --primary-2:hsl(0, 100%, 66%);
-  --neutral-1:hsl(0, 0%, 100%);
-  --neutral-2:hsl(270, 3%, 87%);
-  --neutral-3:hsl(279, 6%, 55%);
-  --neutral-4:hsl(278, 68%, 11%);
+  --primary-1: hsl(249, 99%, 64%) to hsl(278, 94%, 30%);
+  --primary-2: hsl(0, 100%, 66%);
+  --neutral-1: hsl(0, 0%, 100%);
+  --neutral-2: hsl(270, 3%, 87%);
+  --neutral-3: hsl(279, 6%, 55%);
+  --neutral-4: hsl(278, 68%, 11%);
 }
 * {
   font-size: 1.1rem;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 #root {
-display: grid;
-grid-template-columns: repeat(12, 1fr);
-grid-template-rows: repeat(6, 1fr) .5fr repeat(5, 1fr);
-grid-column-gap: 0px;
-grid-row-gap: 0px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(6, 1fr) 0.5fr repeat(4, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
-
 
 .form {
-   grid-area: 4 / 8 / 11 / 11;
-   max-width: 390px;
-   min-width: 290px;
-   width: 100%;
-   height: 365px;
-   
-   line-height: 40px;
-   padding: 10px 10px 15px 10px;
-   margin-top: 50px;
-  }
+  grid-area: 4 / 8 / 11 / 11;
+  max-width: 390px;
+  min-width: 290px;
+  width: 100%;
+  height: 365px;
 
-  .form input {
-    border-radius: 5px;
-    border: 1px solid;
-  }
-  .form p {
-    
-  }
-.side-bar{
-  
+  line-height: 40px;
+  padding: 10px 10px 15px 10px;
+  margin-top: 50px;
+}
+
+.form input {
+  height: 45px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--neutral-3);
+  padding-left: 10px;
+}
+.form input:focus {
+  outline: none;
+}
+ span {
+  margin-bottom: -10px;
+}
+
+.side-bar {
   min-height: 100vh;
-  background-image: url('./Assets/bg-main-desktop.png');
+  background-image: url("./Assets/bg-main-desktop.png");
   background-size: cover;
   background-position: center;
-  
+
   grid-area: 1 / 1 / 13 / 5;
 }
-.front-card{
-  background-image: url('./Assets/bg-card-front.png');
+.front-card {
+  background-image: url("./Assets/bg-card-front.png");
   background-size: cover;
   background-position: center;
   max-width: 447px;
@@ -65,13 +70,12 @@ grid-row-gap: 0px;
   top: 15px;
   color: var(--neutral-1);
 }
-.front-card p{
+.front-card p {
   font-size: 1rem;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
-.front-card svg{
- 
+.front-card svg {
   margin-bottom: 20px;
   bottom: 0;
 }
@@ -80,22 +84,21 @@ grid-row-gap: 0px;
   margin-top: 35px;
   letter-spacing: 5px;
   font-weight: 500;
-  
 }
-#name{
+#name {
   font-size: 0.9rem;
   position: absolute;
   bottom: 30px;
 }
-#date{
-  font-size: .9rem;
+#date {
+  font-size: 0.9rem;
   position: absolute;
   bottom: 30px;
   right: 30px;
 }
 
-.back-card{
-  background-image: url('./Assets/bg-card-back.png');
+.back-card {
+  background-image: url("./Assets/bg-card-back.png");
   background-size: cover;
   background-position: center;
   max-width: 447px;
@@ -111,68 +114,80 @@ grid-row-gap: 0px;
   position: absolute;
   top: 108px;
   right: 2.5em;
-  letter-spacing: 3px ;
-
+  letter-spacing: 3px;
 }
 .form label {
   font-size: 0.8rem;
   letter-spacing: 2px;
   margin-top: 15px;
 }
-.exp_cvc_holder{
+.exp_cvc_holder {
   display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
-.exp{
+.exp {
   width: 230px;
 }
-.exp input{
+
+
+.exp input {
   width: 40%;
 }
-.exp input:last-child{
+.exp input:last-child {
   margin-left: 10px;
 }
 .cvc input {
   width: 100%;
 }
-input{
-  height: 45px;
-  width: 100%;
-  padding-left: 10px;
+
+span {
+  color: var(--primary-2);
+  font-size: small;
+  display: block;
+  
 }
-span{
-    color: var(--primary-2);
-    font-size: small;
-    display: block;
+.exp span {
+  display: inline-block;
+  color: var(--primary-2);
+}
+.errorDisplayer {
+   display: flex;
+   position: relative;
+    
   }
-  .exp span{
-    display: inline-block;
-    color: var(--primary-2);
+  .errorDisplayer span{
+    margin-bottom: -30px;
   }
-button{
+  .cvcError{
+    position: absolute;
+    left: 170px;
+  }
+button {
   width: 100%;
   height: 55px;
-  margin-top: 40px;
-  border: 1px solid ;
+  margin-top: 70px;
+  border: 1px solid;
   border-radius: 10px;
   background-color: var(--neutral-4);
   color: var(--neutral-1);
 }
-.confirmation{
+.confirmation {
   grid-area: 4 / 8 / 11 / 11;
-   max-width: 390px;
-   min-width: 290px;
-   width: 100%;
-   height: 365px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   
-   flex-direction: column;
-   line-height: 40px;
-   padding: 10px 10px 15px 10px;
-   margin-top: 50px;
+  max-width: 390px;
+  min-width: 290px;
+  width: 100%;
+  height: 365px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+  line-height: 40px;
+  padding: 10px 10px 15px 10px;
+  margin-top: 50px;
 }
-.confirmation img{
+.confirmation img {
   width: 110px;
   margin-bottom: 30px;
 }
@@ -181,55 +196,69 @@ button{
   #root {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(7, .25fr) repeat(2, 1fr);
+    grid-template-rows: repeat(7, 0.25fr) repeat(2, 1fr);
   }
 
-  .front-card { 
+  .front-card {
     grid-area: 4 / 2 / 8 / 6;
     max-width: 280px;
     width: 100%;
     height: 230px;
   }
-  .front-card h1{
+  .front-card h1 {
     font-size: 22px;
-    font-weight:500;
+    font-weight: 500;
   }
-  .back-card { 
+  .back-card {
     grid-area: 2 / 3 / 6 / 6;
     max-width: 280px;
     width: 100%;
-     height:230px;
+    height: 230px;
     border-radius: 10px;
   }
   .back-card p {
-  top: 100px;
-}
+    top: 100px;
+  }
   .form {
     grid-area: 7 / 2 / 10 / 6;
     max-width: 540px;
     width: 100%;
-    margin-top: 130px;
+    margin-top: 100px;
   }
   .side-bar {
     grid-area: 1 / 1 / 7 / 7;
     min-height: 240px;
-  background-image: url('./Assets/bg-main-mobile.png');
-  
+    background-image: url("./Assets/bg-main-mobile.png");
   }
-  .confirmation{
+  .confirmation {
     grid-area: 7 / 2 / 10 / 6;
     max-width: 440px;
     width: 100%;
     margin-top: 180px;
     margin-left: 25px;
   }
-  span{
+  span {
     color: var(--primary-2);
     font-size: small;
     display: block;
+    margin-bottom: -15px;
   }
-  .exp span{
-    display: inline-block;
-    color: var(--primary-2);
+  .errorDisplayer {
+   display: flex;
+   position: relative;
+    
+  }
+  .errorDisplayer span{
+    margin-bottom: -30px;
+  }
+  .cvcError{
+    position: absolute;
+    left: 46%;
+  }
+  
+  
+  
+  button {
+    margin-top: 70px;
   }
 }
